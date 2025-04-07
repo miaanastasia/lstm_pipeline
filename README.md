@@ -1,5 +1,6 @@
-# lstm_pipeline
-LSTM-Based Stock Price Prediction
+# LSTM-Based Stock Price Prediction Pipeline
+
+> _Use the link to the notebook to view the most updated code:_ https://colab.research.google.com/drive/1jL2grK3Un0kF3E3RGbNQ-wEwBI4cvZjg?usp=sharing#scrollTo=SNj48C8qlZFq
 
 The developed data product is a machine learning-driven stock price tool to predict the next-day closing prices of a given stock in a given time window. The model is trained using a Long Short-Term Memory (LSTM) neural network with dense layers for time-series forecasting, where capturing sequential dependencies and market trends is critical for accurate predictions. 
 
@@ -7,12 +8,12 @@ The core of the application uses deep learning techniques to go beyond basic tre
 
 The raw data used for the application is downloaded from Yahoo Finance. Each individual stock’s data has columns: Date, High, Low, Open, Close, and Volume for the specified time frame. The market index data is also downloaded from Yahoo Finance but includes only the closing prices for Nasdaq Futures and S&P Global. The following is an outline of how the data was processed and managed throughout the development life cycle, organized by the section headers in the Google Colab notebook:
 
-**I. Exploratory Data Analysis**
+### **I. Exploratory Data Analysis**
   1. Create DataFrame
       - Stock and market index data is downloaded from Yahoo Finance for six years, from 2019-03-01 to 2025-03-01
      - All data is merged into one DataFrame on the ‘Date’ column
 
-**II. Feature Engineering**
+### **II. Feature Engineering**
   1. Default Features and Technical Indicators
        - Volume: moving averages, on-balance volume, volume-weighted average price
        - Volatility: rolling standard deviation, Bollinger Bands
@@ -27,7 +28,7 @@ The raw data used for the application is downloaded from Yahoo Finance. Each ind
     'BB_Upper', 'BB_Lower', 'ROC_10', 'ROC_20', ‘WilliamsR', 'Corr_NQ', 'Corr_SPGI',
     'NQ_MA_50', 'SPGI_MA_50']
 
-**III. Data Preprocessing**
+### **III. Data Preprocessing**
   1. Prepare Data
        - DataFrame is merged, cleaned, and prepared for preprocessing
            - Global feature set is added to merged DataFrame
@@ -45,7 +46,7 @@ The model takes advantage of a wide range of engineered features, including:\
     - **Market Index Data:** Nasdaq and S&P Global closing prices\
     - **Correlation trends** between the individual stock and macro indicators
 
-**IV. Modeling**\
+### **IV. Modeling**
 The LSTM sequential model consists of the following layers:
 
 1. Input Shape: (X_train.shape[1], X_train.shape[2])
@@ -65,7 +66,7 @@ sequences
 7. Dropout(—): variable, more regularization before output
 8. Dense(1): outputs the predicted price
 
-**V. Validation**
+### **V. Validation**
 
 The model uses the Adam optimizer with a customized learning rate (0.0001), offering adaptive gradient descent for stable convergence.
 - The loss function is Mean Squared Error (MSE), optimal for continuous numeric prediction
@@ -76,7 +77,7 @@ The model uses the Adam optimizer with a customized learning rate (0.0001), offe
 
 The training strategy was optimized to balance performance and interpretability, as the look-back window of 60 days gives the model sufficient history to learn from trends. The dropout layers and validation loss help identify and prevent overfitting, while the closing prices and input features create a well-rounded feature space for price prediction.
 
-**VI. Evaluation**
+### **VI. Evaluation**
 
 The model consistently achieved RMSE below 0.05, MAE under 0.02, and APE below
 5% (the threshold), with many test runs producing values between 1% and 3% (the goal). These
@@ -86,7 +87,7 @@ to actual stock prices.
 The model performed best with diversified market indices DOW (Dow Jones Industrial
 Average), ^GSPC (S&P Global), ^IXIC (Nasdaq Composite), and ^RUT (Russell 2000 Index), averaging below 2% error for most runs with the full feature set. The other stocks in the program, each belonging to more specific sectors (finance, media, industrial, etc.), performed with an average percentage error of between 4 and 6% on most runs with the full feature set. In these instances, the feature importance component is especially important in understanding the stock’s behavior and which features are most influential. Naturally, sector-specific stocks would behave differently with a wide range of features versus a broader market index.
 
-**VII. Visualization**
+### **VII. Visualization**
 
 Visual validation was also used to assess performance. A summary of the model architecture is available after the pipeline is run for analysis at a glance. Plots comparing true vs. predicted closing prices showed strong alignment over time, especially in the most recent windows. Additional plots for prediction error and feature importance allow further analysis and
 interpretability.
